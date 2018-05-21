@@ -12,6 +12,11 @@ enum InvoiceStatus {
   o FINANCING
   o PROCESSED
 }
+enum InvoiceDiscountStatus {
+  o INSERTED
+  o PROCESSED
+  o CANCELED
+}
 enum IdentificationType {
   o JURIDICAL
   o PHYSICAL
@@ -34,6 +39,9 @@ asset InvoiceDiscount identified by invoiceDescountId {
     o DateTime descountDate
     o Double amount
     o Double percentage
+    o Double commissionTechnical optional
+    o Double commissionFinancial optional
+    --> InvoiceDiscountStatus status
     --> Financial financial
 }
 participant ClientAccount identified by clientAccountId {
@@ -51,7 +59,9 @@ abstract participant User identified by userId {
     --> ClientAccount[] accounts
 }
 participant Technical extends User {}
-participant Financial extends User {}
+participant Financial extends User {
+    o Double percentageCommission
+}
 participant Issuer extends User {}
 participant Debtor extends User {
     o Integer daysRemains
@@ -61,6 +71,11 @@ participant Debtor extends User {
 transaction AcceptDescountInvoice {
     --> Invoice invoice
     --> Debtor debtor
+}
+transaction ApproveDescountInvoice {
+    --> Invoice invoice
+    --> InvoiceDiscount invoiceDiscount
+    --> Technical technical
 }
 transaction DescountInvoice {
     --> Invoice invoice
