@@ -1,0 +1,31 @@
+/** 
+ * Sample queries for Commodity Trading business network
+ */
+
+query selectInvoicesByDebtor {
+  description: "Consultar las facturas de un deudor"
+  statement:
+      SELECT org.isthmus.invoice.Invoice
+        WHERE (debtor == _$debtor)
+}
+
+query selectInvoicesDiscount {
+  description: "Consultar las facturas disponibles para descuento"
+  statement:
+      SELECT org.isthmus.invoice.Invoice
+        WHERE (status == 'FINANCING')
+}
+
+query selectInvoicesByIssuer {
+  description: "Consultar las facturas disponibles para descuento"
+  statement:
+      SELECT org.isthmus.invoice.Invoice
+        WHERE (issuer == _$issuer)
+}
+
+query selectInvoiceByFinancial {
+  description: "Consultar las facturas que desconto"
+  statement:
+      SELECT org.isthmus.invoice.Invoice
+        WHERE (financial == _$financial)
+}

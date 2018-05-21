@@ -1,0 +1,72 @@
+/**
+ * My commodity trading network
+ */
+namespace org.isthmus.invoice
+
+enum Currency {
+  o CRC
+  o USD
+}
+enum InvoiceStatus {
+  o READY
+  o FINANCING
+  o PROCESSED
+}
+enum IdentificationType {
+  o JURIDICAL
+  o PHYSICAL
+}
+asset Invoice identified by invoiceId {
+    o String invoiceId
+    o String invoiceNumber
+    o DateTime issueDate
+    o DateTime expirationDate
+    o Currency currency
+    o Double amount
+    o InvoiceStatus status
+    --> Debtor debtor
+    --> Issuer issuer
+    --> Financial financial optional
+    --> InvoiceDiscount[] discounts optional
+}
+asset InvoiceDiscount identified by invoiceDescountId {
+    o String invoiceDescountId
+    o DateTime descountDate
+    o Double amount
+    o Double percentage
+    --> Financial financial
+}
+participant ClientAccount identified by clientAccountId {
+  o String clientAccountId
+  o Currency currency  
+  o String clientAccount
+}
+abstract participant User identified by userId {
+    o String userId
+    o IdentificationType identificationType 
+    o String identification
+    o String name
+    o String lastName optional
+    o String country
+    --> ClientAccount[] accounts
+}
+participant Technical extends User {}
+participant Financial extends User {}
+participant Issuer extends User {}
+participant Debtor extends User {
+    o Integer daysRemains
+    o Double mensualTax
+    o Double minimumTax
+}
+transaction AcceptDescountInvoice {
+    --> Invoice invoice
+    --> Debtor debtor
+}
+transaction DescountInvoice {
+    --> Invoice invoice
+    --> Financial financial
+}
+transaction CloseInvoice {
+    --> Technical technical
+    --> Invoice invoice
+} 
