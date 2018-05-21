@@ -1,85 +1,18 @@
 /**
  * Access control rules for isthmus-network
  */
-rule DescountInvoiceTransaction {
-    description: "Permitir a los participantes financieros realizar el descuento"
-    participant: "org.isthmus.invoice.Financial"
-    operation: READ, UPDATE
-    resource: "org.isthmus.invoice.Invoice"
-    transaction: "org.isthmus.invoice.DescountInvoice"
-    action: ALLOW
-}
-
-rule DescountInvoiceCreation {
-    description: "Permitir a los participantes financieros crear el activo descuento"
-    participant: "org.isthmus.invoice.Financial"
-    operation: READ, CREATE
-    resource: "org.isthmus.invoice.InvoiceDiscount"
-    action: ALLOW
-}
-
-rule AcceptDescountInvoiceTransaction {
-    description: "Permitir a al emisor aceptar el descuento de facturas"
-    participant: "org.isthmus.invoice.Issuer"
-    operation: READ, UPDATE
-    resource: "org.isthmus.invoice.Invoice"
-    transaction: "org.isthmus.invoice.AcceptDescountInvoice"
-    action: ALLOW
-}
-
-rule CloseInvoiceTransaction {
-    description: "Permitir a los participantes tecnicos realizar el cierre de la factura"
-    participant: "org.isthmus.invoice.Technical"
-    operation: READ, UPDATE
-    resource: "org.isthmus.invoice.Invoice"
-    transaction: "org.isthmus.invoice.CloseInvoice"
-    action: ALLOW
-}
-
-rule ConsultInvoice {
-    description: "Permitir a los participantes consultar facturas"
-    participant: "org.isthmus.invoice.*"
-    operation: READ
-    resource: "org.isthmus.invoice.Invoice"
-    action: ALLOW
-}
-
-rule UpdateInvoiceFinancial {
-    description: "Permitir a los participantes consultar facturas"
-    participant: "org.isthmus.invoice.Financial"
-    operation: UPDATE
-    resource: "org.isthmus.invoice.Invoice"
-    action: ALLOW
-}
-
-rule UpdateInvoiceIssuer {
-    description: "Permitir a los participantes consultar facturas"
-    participant: "org.isthmus.invoice.Issuer"
-    operation: UPDATE
-    resource: "org.isthmus.invoice.Invoice"
-    action: ALLOW
-}
-
-rule CreateInvoice {
-    description: "Permitir a los participantes consultar facturas"
-    participant: "org.isthmus.invoice.Debtor"
-    operation: CREATE
-    resource: "org.isthmus.invoice.Invoice"
+rule Default {
+    description: "Allow all participants access to all resources"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.isthmus.invoice.*"
     action: ALLOW
 }
 
 rule SystemACL {
   description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  participant: "ANY"
   operation: ALL
   resource: "org.hyperledger.composer.system.**"
-  action: ALLOW
-}
-
-rule InvoiceACL {
-  description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.NetworkAdmin"
-  operation: ALL
-  resource: "org.isthmus.invoice.*"
   action: ALLOW
 }

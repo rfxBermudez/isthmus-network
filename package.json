@@ -1,6 +1,6 @@
 {
   "name": "isthmus-network",
-  "version": "0.0.10",
+  "version": "0.0.1",
   "description": "Isthmus Invoice Network",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/isthmus-network.bna",
