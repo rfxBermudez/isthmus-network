@@ -41,7 +41,7 @@ asset InvoiceDiscount identified by invoiceDescountId {
     o Double percentage
     o Double commissionTechnical optional
     o Double commissionFinancial optional
-    --> InvoiceDiscountStatus status
+    o InvoiceDiscountStatus status
     --> Financial financial
 }
 participant ClientAccount identified by clientAccountId {
