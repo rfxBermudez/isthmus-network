@@ -83,5 +83,7 @@ transaction DescountInvoice {
 }
 transaction CloseInvoice {
     --> Technical technical
+    --> InvoiceDiscount invoiceDiscount
     --> Invoice invoice
+    --> Financial financial
 } 
